@@ -1,416 +1,149 @@
-/* ============================================================
-   FIFA 2026 Predictor - Clean Modern Redesign
-   ============================================================ */
-
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-:root {
-  --primary: #0b2a4a;
-  --primary-light: #1f5fa8;
-
-  --accent: #f5b301;
-
-  --success: #16a34a;
-  --danger: #dc2626;
-
-  --bg: #f4f6fb;
-  --surface: #ffffff;
-
-  --text: #0f172a;
-  --muted: #64748b;
-
-  --border: #e5e7eb;
-
-  --shadow: 0 6px 18px rgba(0,0,0,.08);
-
-  --radius: 14px;
-
-  --font: "Inter", sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
+/* =========================
+   MODAL OVERLAY FIX
+========================= */
+#predictionModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none; /* keep JS controlling visibility */
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-body {
-  font-family: var(--font);
-  background: var(--bg);
-  color: var(--text);
-  min-height: 100vh;
-}
-
-/* ================= HEADER ================= */
-
-header {
-  text-align: center;
-  padding: 48px 20px 20px;
-}
-
-header h1 {
-  font-size: 2.6rem;
-  font-weight: 800;
-  color: var(--primary);
-}
-
-.subtitle {
-  color: var(--muted);
-  margin-top: 8px;
-  font-size: 1rem;
-}
-
-/* ================= TABS ================= */
-
-.tab-nav {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.tab-btn {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 12px 22px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.2s;
-  box-shadow: var(--shadow);
-}
-
-.tab-btn:hover {
-  transform: translateY(-2px);
-}
-
-.tab-btn.active {
-  background: var(--primary);
-  color: white;
-  border-color: var(--primary);
-}
-
-/* ================= LAYOUT ================= */
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 16px 40px;
-}
-
-.tab-content {
-  display: none;
-}
-
-.tab-content.active {
-  display: block;
-}
-
-/* ================= SECTION TITLE ================= */
-
-.section-title {
-  font-size: 1.6rem;
-  font-weight: 800;
-  margin: 28px 0 12px;
-  color: var(--primary);
-}
-
-/* ================= BUTTONS ================= */
-
-.toolbar-btns {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 10px 0 20px;
-}
-
-.toolbar-btn {
-  border: 1px solid var(--border);
-  background: var(--surface);
-  padding: 8px 16px;
-  border-radius: 999px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.toolbar-btn:hover {
-  background: #eef2ff;
-}
-
-.submit-section {
-  text-align: center;
-  margin: 40px 0;
-}
-
-.submit-btn {
-  background: var(--accent);
-  border: none;
-  padding: 14px 40px;
-  border-radius: 999px;
-  font-weight: 800;
-  font-size: 1rem;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(245,179,1,.25);
-  transition: 0.2s;
-}
-
-.submit-btn:hover {
-  transform: translateY(-2px);
-}
-
-/* ================= GROUPS ================= */
-
-.groups-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 14px;
-}
-
-.group-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  padding: 12px;
-  transition: 0.2s;
-}
-
-.group-card:hover {
-  transform: translateY(-3px);
-}
-
-.group-card h3 {
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 800;
-  margin-bottom: 10px;
-  color: var(--primary);
-}
-
-/* ================= TEAM ROW ================= */
-
-.group-team {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  border-radius: 10px;
-  background: #f8fafc;
-  margin-bottom: 6px;
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
-.group-team .team-name {
-  flex: 1;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.group-team .position-badge {
-  width: 22px;
-  height: 22px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.7rem;
-  font-weight: 800;
-  background: #e2e8f0;
-}
-
-.group-team.pos-1 .position-badge {
-  background: gold;
-}
-
-.group-team.pos-2 .position-badge {
-  background: silver;
-}
-
-.group-team.pos-3 .position-badge {
-  background: #cd7f32;
-}
-
-/* ================= BRACKET ================= */
-
-.bracket-wrapper {
-  overflow-x: auto;
-  padding: 12px 0;
-}
-
-.bracket-slot {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px 10px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  min-height: 42px;
-  box-shadow: 0 2px 6px rgba(0,0,0,.06);
-  transition: 0.2s;
-}
-
-.bracket-slot:hover {
-  border-color: var(--primary-light);
-}
-
-.slot-name {
-  font-weight: 700;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ================= AWARDS ================= */
-
-.awards-section {
-  margin-top: 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 16px;
-  box-shadow: var(--shadow);
-}
-
-.award-row {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 8px 0;
-}
-
-.award-row label {
-  min-width: 120px;
-  font-weight: 600;
-  font-size: 0.85rem;
-}
-
-.award-select {
-  flex: 1;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid var(--border);
-  font-weight: 600;
-}
-
-/* ================= LEADERBOARD ================= */
-
-.leaderboard-list {
-  display: grid;
-  gap: 10px;
-}
-
-.leaderboard-entry {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px;
-  background: var(--surface);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.leaderboard-entry:hover {
-  transform: translateY(-2px);
-  border-color: var(--primary-light);
-}
-
-.leaderboard-score {
-  background: var(--accent);
-  padding: 6px 10px;
-  border-radius: 999px;
-  font-weight: 800;
-}
-
-/* ================= MODALS ================= */
-
-.prediction-modal-overlay,
-.name-modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.prediction-modal,
-.name-modal {
-  background: var(--surface);
-  padding: 20px;
-  border-radius: var(--radius);
-  width: min(900px, 95vw);
+/* =========================
+   MODAL CONTENT BOX
+========================= */
+#predictionViewer {
+  background: #ffffff;
+  width: 100%;
+  max-width: 1000px;
   max-height: 90vh;
-  overflow: auto;
-  box-shadow: var(--shadow);
+  overflow-y: auto;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
+  box-sizing: border-box;
 }
 
-/* ================= INPUTS ================= */
+/* =========================
+   TITLE
+========================= */
+.scoring-help h3 {
+  margin-top: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+}
 
-input,
-select {
-  border: 1px solid var(--border);
-  padding: 10px;
+/* =========================
+   GRID LAYOUT FIX (MAIN ISSUE)
+========================= */
+.scoring-help-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+/* =========================
+   CARDS
+========================= */
+.scoring-help-card {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
   border-radius: 10px;
-  font-weight: 600;
+  padding: 16px;
 }
 
-input:focus,
-select:focus {
-  outline: none;
-  border-color: var(--primary-light);
-  box-shadow: 0 0 0 3px rgba(31,95,168,.15);
+.scoring-help-card h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #111827;
 }
 
-/* ================= UTILITIES ================= */
-
-.note-text {
-  color: var(--muted);
-  font-size: 0.85rem;
-  text-align: center;
-  margin-top: 6px;
+.scoring-help-card ul {
+  padding-left: 18px;
+  margin: 0;
 }
 
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(255,255,255,0.85);
+.scoring-help-card li {
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+
+/* =========================
+   NOTE TEXT
+========================= */
+.scoring-help-note {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+/* =========================
+   EXAMPLE BOX
+========================= */
+.scoring-help-example {
+  margin-top: 16px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 10000;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: #f3f4f6;
+  border-radius: 10px;
 }
 
-/* ================= RESPONSIVE ================= */
+.scoring-example-badge {
+  min-width: 36px;
+  height: 36px;
+  background: #22c55e;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  border-radius: 8px;
+}
 
-@media (max-width: 768px) {
-  header h1 {
-    font-size: 1.8rem;
+/* =========================
+   FOOTER
+========================= */
+.scoring-help-footer {
+  margin-top: 18px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* =========================
+   INPUT FIX (VERY IMPORTANT)
+========================= */
+input[type="number"] {
+  width: 50px;
+  padding: 6px;
+  text-align: center;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+/* =========================
+   SMALL SCREEN FIX
+========================= */
+@media (max-width: 600px) {
+  #predictionViewer {
+    padding: 16px;
   }
 
-  .tab-btn {
-    font-size: 0.85rem;
-    padding: 10px 14px;
-  }
-
-  .groups-grid {
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  }
-
-  .award-row {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .award-row label {
-    min-width: auto;
+  .scoring-help-grid {
+    grid-template-columns: 1fr;
   }
 }
