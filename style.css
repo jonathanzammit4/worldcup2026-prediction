@@ -2,35 +2,31 @@
    2026 FIFA World Cup Prediction Game - Cartoon Theme
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+   
 :root {
-  /* Cartoon Color Palette */
-  --grass-green: #4CAF50;
-  --grass-light: #81C784;
-  --field-green: #C8E6C9;
-  --dirt-brown: #8D6E63;
-  --sky-blue: #64B5F6;
-  --gold: #FFD700;
-  --gold-dark: #F9A825;
-  --silver: #BDBDBD;
-  --bronze: #FF8A65;
-  --red-accent: #FF6B6B;
-  --dark-text: #1a1a2e;
-  --mid-text: #37474F;
-  --light-bg: #F1F8E9;
-  --white: #FFFFFF;
-  --card-bg: #FFFFFF;
-  --border-color: #2E7D32;
-  --border-thick: 3px solid var(--border-color);
-  --border-medium: 2px solid #546E7A;
-  --shadow-soft: 4px 4px 0px rgba(0,0,0,0.12);
-  --shadow-pop: 6px 6px 0px rgba(0,0,0,0.18);
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 22px;
-  --radius-pill: 999px;
-  --font: 'Nunito', 'Segoe UI', sans-serif;
+  --primary: #002b5c;
+  --primary-light: #004a99;
+
+  --accent: #ffb800;
+
+  --success: #16a34a;
+  --danger: #dc2626;
+
+  --background: #f7f9fc;
+  --surface: #ffffff;
+
+  --text: #111827;
+  --text-light: #6b7280;
+
+  --border: #e5e7eb;
+
+  --shadow:
+    0 4px 12px rgba(0,0,0,.08);
+
+  --radius: 14px;
+
+  --font: "Inter", sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -41,61 +37,44 @@ html {
 
 body {
   font-family: var(--font);
-  background: linear-gradient(180deg, #E8F5E9 0%, var(--light-bg) 50%, #DCEDC8 100%);
-  color: var(--dark-text);
+  background: var(--background);
+  color: var(--text);
   min-height: 100vh;
-  background-attachment: fixed;
 }
 
 /* ---- Header ---- */
 header {
   text-align: center;
-  padding: 28px 20px 16px;
-  position: relative;
+  padding: 48px 20px 32px;
 }
+
 header h1 {
-  font-size: 2.4rem;
-  font-weight: 900;
-  color: var(--dark-text);
-  text-shadow: 2px 2px 0px var(--gold);
-  letter-spacing: -0.5px;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--primary);
+  text-shadow: none;
 }
-header .subtitle {
-  font-size: 1rem;
-  color: var(--mid-text);
-  margin-top: 4px;
-  font-weight: 600;
+
+.subtitle {
+  color: var(--text-light);
+  margin-top: 10px;
 }
 
 /* ---- Tab Navigation ---- */
 .tab-nav {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  padding: 0 20px 20px;
+  margin-bottom: 24px;
 }
+
 .tab-btn {
-  font-family: var(--font);
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 12px 36px;
-  border-radius: var(--radius-pill);
-  border: var(--border-thick);
-  cursor: pointer;
-  background: var(--white);
-  color: var(--dark-text);
-  transition: all 0.2s ease;
-  box-shadow: var(--shadow-soft);
+  border: none;
+  background: white;
+  box-shadow: var(--shadow);
+  padding: 14px 28px;
 }
-.tab-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-pop);
-}
+
 .tab-btn.active {
-  background: var(--grass-green);
-  color: var(--white);
-  border-color: var(--border-color);
-  box-shadow: var(--shadow-pop);
+  background: var(--primary);
+  color: white;
 }
 
 .tab-content { display: none; }
@@ -109,13 +88,16 @@ header .subtitle {
 }
 
 .section-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--dark-text);
-  margin: 24px 0 12px;
-  padding-left: 8px;
-  border-left: 6px solid var(--gold);
-  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  margin: 36px 0 16px;
+
+  font-size: 1.8rem;
+  font-weight: 700;
+
+  color: var(--primary);
 }
 
 /* ---- Group Stage ---- */
@@ -133,9 +115,14 @@ header .subtitle {
   box-shadow: var(--shadow-soft);
   transition: transform 0.15s ease;
 }
+.group-card {
+  transition: all .2s ease;
+}
+
 .group-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-pop);
+  transform: translateY(-4px);
+  box-shadow:
+    0 8px 24px rgba(0,0,0,.12);
 }
 .group-card h3 {
   font-size: 1.1rem;
@@ -608,21 +595,22 @@ header .subtitle {
   margin: 32px 0;
 }
 .submit-btn {
-  font-family: var(--font);
-  font-size: 1.15rem;
-  font-weight: 800;
-  padding: 14px 48px;
-  border-radius: var(--radius-pill);
-  border: var(--border-thick);
-  cursor: pointer;
-  background: var(--gold);
-  color: var(--dark-text);
-  box-shadow: var(--shadow-pop);
-  transition: all 0.2s ease;
+  background: var(--accent);
+  border: none;
+
+  color: #111;
+
+  font-weight: 700;
+
+  padding: 16px 40px;
+
+  border-radius: 999px;
+
+  box-shadow:
+    0 6px 16px rgba(255,184,0,.35);
 }
 .submit-btn:hover {
-  transform: translateY(-3px) scale(1.03);
-  box-shadow: 8px 8px 0px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
 }
 .submit-btn:active { transform: translateY(0); }
 .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
