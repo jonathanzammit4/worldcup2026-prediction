@@ -4,20 +4,20 @@
   <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="./favicon.ico">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mundial FIFA 2026</title>
+  <title>FIFA World Cup 2026</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flag-icons@7.2.3/css/flag-icons.min.css">
   <link rel="stylesheet" href="style.css?v=group-rules-positions-only">
 </head>
 <body>
 
   <header>
-    <h1>⚽ Ulises, tráyame el MUNDIAL 2026 ⚽</h1>
-    <p class="subtitle">¿Cuál va a ser tu "ojito con..."?</p>
+    <h1>⚽ FIFA World Cup 2026 Predictor ⚽</h1>
+    <p class="subtitle">Predict the tournament and compete with your friends</p>
   </header>
 
   <nav class="tab-nav">
-    <button class="tab-btn active" data-tab="predict">&#128202; Apostar</button>
-    <button class="tab-btn" data-tab="leaderboard">&#127942; Ranking</button>
+   <button class="tab-btn active" data-tab="predict"> 📊 Predictions </button>
+  <button class="tab-btn" data-tab="leaderboard"> 🏆 Leaderboard </button>
   </nav>
 
   <!-- ==================== PREDICTION TAB ==================== -->
@@ -26,60 +26,60 @@
 
       <!-- Toolbar -->
       <div class="toolbar-btns">
-        <button class="toolbar-btn" id="btnReset">&#128260; Limpiar todo (no hay vuelta atrás)</button>
-        <button class="toolbar-btn" id="btnScoringHelp">❓ Cómo se puntúa</button>
+        <button class="toolbar-btn" id="btnReset"> 🔄 Reset Predictions </button>
+        <button class="toolbar-btn" id="btnScoringHelp">❓ Scoring Rules</button>
       </div>
 
       <!-- Group Stage -->
-      <h2 class="section-title">&#127758; Fase de grupos</h2>
-      <p class="note-text">Haz click en cada grupo y mete los resultados. Hasta entonces solo verás las banderas; el ranking y los mejores terceros se calculan solos.</p>
+      <h2 class="section-title">🌍 Group Stage</h2>
+      <p class="note-text">Click a group to enter match results. Rankings and best third-place teams are calculated automatically.</p>
       <div class="groups-grid" id="groupsGrid"></div>
 
       <!-- Knockout Bracket -->
       <h2 class="section-title">🥊 Knockouts</h2>
-      <p class="note-text">Es de cajón cómo funciona. Si te hacen falta instrucciones mereces palmar.</p>
+      <p class="note-text">Select the winner of each match to build your bracket.</p>
       <div class="bracket-wrapper">
         <div class="bracket" id="bracketContainer"></div>
       </div>
 
       <!-- Awards -->
       <div class="awards-section">
-        <h3>&#127942; Logros individuales</h3>
+        <h3>Indiviudal Awards</h3>
 
         <div class="award-row">
-          <label>Bota de Oro (5pt):</label>
+          <label>Golden Boot (5pts)</label>
           <select id="awardGb1" class="award-select"></select>
         </div>
 
         <div class="award-row">
-          <label>2º Bota de Oro (3pt):</label>
+          <label>Golden Boot Runner-Up (3pts)</label>
           <select id="awardGb2" class="award-select"></select>
         </div>
 
         <div class="award-row">
-          <label>3º Bota de Oro (1pt):</label>
+          <label>Golden Boot 3rd Place (1pt)</label>
           <select id="awardGb3" class="award-select"></select>
         </div>
 
         <div class="award-row">
-          <label>Balón de Oro (5pt):</label>
+          <label>Golden Ball (5pts):</label>
           <select id="awardBa1" class="award-select"></select>
         </div>
 
         <div class="award-row">
-          <label>2º Balón de Oro (3pt):</label>
+          <label>Golden Ball Runner-Up (3pt):</label>
           <select id="awardBa2" class="award-select"></select>
         </div>
 
         <div class="award-row">
-          <label>3º Balón de Oro (1pt):</label>
+          <label>Golden Ball 3rd Place (1pt):</label>
           <select id="awardBa3" class="award-select"></select>
         </div>
       </div>
 
       <!-- Submit -->
       <div class="submit-section">
-        <button class="submit-btn" id="btnSubmit">&#9917; Sentar cátedra</button>
+        <button class="submit-btn" id="btnSubmit">⚽ Submit Prediction</button>
       </div>
 
     </div>
@@ -88,9 +88,9 @@
   <!-- ==================== LEADERBOARD TAB ==================== -->
     <div id="tab-leaderboard" class="tab-content">
     <div class="container">
-      <h2 class="section-title">&#127942; Ranking</h2>
+      <h2 class="section-title">🏆 Leaderboard</h2>
       <p class="note-text">
-        Haz click en un jugador para confirmar el sesgo que ya tienes de que no tiene razón.
+        Click a player to view their prediction and compare it with the actual results.
       </p>
 
       <div id="leaderboardContent">
@@ -109,7 +109,7 @@
   <!-- Loading Overlay -->
   <div class="loading-overlay" id="loadingOverlay" style="display:none;">
     <span class="ball-spinner">&#9917;</span>
-    <p id="loadingText">Cargando...</p>
+    <p id="loadingText">Loading...</p>
   </div>
 
   <!-- Toast container -->
@@ -123,8 +123,8 @@
   <script src="app.js?v=third-place-between-semis"></script>
   <div class="name-modal-overlay" id="nameModal" style="display:none;">
   <div class="name-modal">
-    <h3>Así que sentando cátedra, ¿eh?</h3>
-    <p>¿Quién cojones eres?</p>
+    <h3>Ready to submit your application?</h3>
+    <p>Enter your name:</p>
 
     <input
       type="text"
@@ -135,8 +135,8 @@
     >
 
     <div class="name-modal-actions">
-      <button type="button" class="toolbar-btn" id="cancelNameSubmit">Paso</button>
-      <button type="button" class="submit-btn" id="confirmNameSubmit">Apostar</button>
+      <button type="button" class="toolbar-btn" id="cancelNameSubmit">Cancel</button>
+      <button type="button" class="submit-btn" id="confirmNameSubmit">Submit</button>
     </div>
   </div>
 </div>
