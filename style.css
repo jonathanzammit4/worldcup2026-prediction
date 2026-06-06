@@ -1,37 +1,364 @@
 /* =========================
-   FIFA 2026 THEME (FULL UI RESET)
+   FIFA 2026 — REDESIGNED UI
+   Font: Barlow Condensed (headings) + DM Sans (body)
+   Import in your HTML <head>:
+   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 ========================= */
 
+/* =========================
+   DESIGN TOKENS
+========================= */
 :root {
-  --bg: #0b1220;
-  --panel: #111a2e;
-  --card: #16233d;
-  --card-hover: #1b2c4d;
+  /* Backgrounds */
+  --bg:           #080d18;
+  --surface:      #0e1525;
+  --card:         #131c30;
+  --card-hover:   #18243d;
+  --card-active:  #1d2c4a;
 
-  --text: #e8eefc;
-  --muted: #a9b4cc;
+  /* Typography */
+  --text:         #edf1fb;
+  --text-sub:     #8b99b8;
+  --text-muted:   #4f5e7a;
 
-  --primary: #2dd4bf;
-  --primary-dark: #14b8a6;
+  /* Brand palette */
+  --teal:         #2be4c8;
+  --teal-dim:     rgba(43,228,200,0.12);
+  --teal-glow:    rgba(43,228,200,0.25);
+  --blue:         #5ba4f5;
+  --blue-dim:     rgba(91,164,245,0.12);
+  --gold:         #f5c842;
+  --gold-dim:     rgba(245,200,66,0.12);
+  --danger:       #f05252;
+  --success:      #34d399;
 
-  --accent: #60a5fa;
-  --danger: #ef4444;
+  /* Borders */
+  --border:       rgba(255,255,255,0.07);
+  --border-mid:   rgba(255,255,255,0.13);
+  --border-hi:    rgba(43,228,200,0.35);
 
-  --border: rgba(255,255,255,0.08);
+  /* Radius */
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   16px;
+  --r-xl:   22px;
+
+  /* Fonts */
+  --font-display: 'Barlow Condensed', 'Arial Narrow', sans-serif;
+  --font-body:    'DM Sans', 'Segoe UI', sans-serif;
+
+  /* Transitions */
+  --ease: 0.18s ease;
 }
 
 /* =========================
-   BASE
+   BASE RESET
 ========================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: #0a0f1c;
+  font-family: var(--font-body);
+  background: var(--bg);
   color: var(--text);
+  margin: 0;
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Subtle dot-grid background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 28px 28px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* =========================
+   PAGE WRAPPER
+========================= */
+.page-wrapper,
+main,
+#app,
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+}
+
+/* =========================
+   PAGE HEADER
+========================= */
+.page-header {
+  margin-bottom: 36px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-header h1,
+h1 {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text);
+  margin: 0 0 6px 0;
+  line-height: 1.1;
+}
+
+.page-header p,
+.page-subtitle {
+  font-size: 15px;
+  color: var(--text-sub);
   margin: 0;
 }
 
 /* =========================
-   MODAL
+   TOP NAV BUTTONS
+========================= */
+.nav-tabs,
+.top-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0;
+}
+
+/* Primary tab buttons (Predictions / Leaderboard) */
+.tab-btn,
+button[data-tab] {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-mid);
+  background: var(--card);
+  color: var(--text-sub);
+  cursor: pointer;
+  transition: all var(--ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.tab-btn:hover,
+button[data-tab]:hover {
+  background: var(--card-hover);
+  color: var(--text);
+  border-color: var(--border-mid);
+  transform: translateY(-1px);
+}
+
+.tab-btn.active,
+button[data-tab].active,
+button.active {
+  background: var(--teal-dim);
+  border-color: var(--border-hi);
+  color: var(--teal);
+}
+
+/* Secondary utility buttons (Reset / Scoring Rules) */
+.util-btn,
+button.secondary {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 15px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.util-btn:hover,
+button.secondary:hover {
+  background: var(--card);
+  color: var(--text-sub);
+  border-color: var(--border-mid);
+}
+
+/* =========================
+   GLOBAL BUTTON BASE
+   (catches any unclassed button)
+========================= */
+button {
+  font-family: var(--font-body);
+  background: var(--card);
+  color: var(--text-sub);
+  border: 1px solid var(--border);
+  padding: 8px 14px;
+  border-radius: var(--r-md);
+  cursor: pointer;
+  transition: all var(--ease);
+  font-size: 13px;
+}
+
+button:hover {
+  background: var(--card-hover);
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none;
+}
+
+button.primary {
+  background: var(--teal);
+  color: #04201c;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+button.primary:hover {
+  background: #22cdb4;
+}
+
+/* =========================
+   SECTION HEADINGS
+========================= */
+.section-heading,
+h2 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--text);
+  margin: 36px 0 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-sub {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin: 0 0 18px 0;
+}
+
+h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0 0 12px 0;
+}
+
+h4 {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin: 0 0 10px 0;
+}
+
+/* =========================
+   GROUP STAGE GRID
+========================= */
+.group-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.group-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: 14px 12px;
+  cursor: pointer;
+  transition: all var(--ease);
+  position: relative;
+  overflow: hidden;
+}
+
+.group-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--teal), var(--blue));
+  opacity: 0;
+  transition: opacity var(--ease);
+}
+
+.group-card:hover {
+  background: var(--card-hover);
+  border-color: var(--border-mid);
+  transform: translateY(-2px);
+}
+
+.group-card:hover::before {
+  opacity: 1;
+}
+
+.group-card h4 {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin: 0 0 10px 0;
+}
+
+.group-card-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* =========================
+   FLAGS + TEAMS (group card)
+========================= */
+.team {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 0;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.team img {
+  width: 20px;
+  height: 14px;
+  border-radius: 2px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.team span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================
+   MODAL OVERLAY
 ========================= */
 #predictionModal {
   position: fixed;
@@ -39,221 +366,608 @@ body {
   display: none;
   justify-content: center;
   align-items: center;
-  background: rgba(0,0,0,0.75);
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   z-index: 9999;
-  padding: 20px;
-  box-sizing: border-box;
+  padding: 16px;
 }
 
+#predictionModal.open {
+  display: flex;
+}
+
+/* =========================
+   MODAL PANEL
+========================= */
 #predictionViewer {
   width: 100%;
-  max-width: 1200px;
+  max-width: 700px;
   max-height: 90vh;
   overflow-y: auto;
-  background: var(--panel);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-  border: 1px solid var(--border);
+  background: var(--surface);
+  border-radius: var(--r-xl);
+  border: 1px solid var(--border-mid);
+  padding: 28px 28px 24px;
+  position: relative;
+  animation: modalIn 0.22s ease;
 }
 
-/* =========================
-   HEADINGS
-========================= */
-h1, h2, h3, h4 {
-  color: var(--text);
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(10px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-.scoring-help h3 {
-  font-size: 26px;
-  margin-bottom: 10px;
-}
-
-/* =========================
-   BUTTONS (IMPORTANT - FIXES YOUR TOP UI)
-========================= */
-button {
+/* Modal close button */
+#predictionViewer .close-btn,
+#predictionModal .close-btn,
+button.modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
   background: var(--card);
-  color: var(--text);
   border: 1px solid var(--border);
-  padding: 8px 12px;
-  border-radius: 8px;
+  color: var(--text-sub);
+  font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0;
   cursor: pointer;
-  transition: 0.2s ease;
+  transition: all var(--ease);
 }
 
-button:hover {
+#predictionViewer .close-btn:hover,
+button.modal-close:hover {
   background: var(--card-hover);
-  transform: translateY(-1px);
+  color: var(--text);
+  transform: none;
 }
 
-button.primary {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  color: #061018;
-  font-weight: bold;
+/* Modal header */
+.modal-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-header h3 {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 4px 0;
+  padding-right: 40px;
+}
+
+.modal-header p {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin: 0;
+}
+
+/* Modal scrollbar */
+#predictionViewer::-webkit-scrollbar {
+  width: 6px;
+}
+#predictionViewer::-webkit-scrollbar-track {
+  background: transparent;
+}
+#predictionViewer::-webkit-scrollbar-thumb {
+  background: var(--card-hover);
+  border-radius: 10px;
 }
 
 /* =========================
-   GROUP STAGE GRID
+   MATCH LIST (inside modal)
 ========================= */
-.group-container {
+.match-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 16px;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 28px;
 }
 
-.group-card {
+.match-item {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 10px;
-  width: 160px;
-  transition: 0.2s ease;
+  border-radius: var(--r-md);
+  padding: 12px 14px;
+  transition: border-color var(--ease);
 }
 
-.group-card:hover {
-  background: var(--card-hover);
+.match-item:hover {
+  border-color: var(--border-mid);
 }
 
-.group-card h4 {
-  margin: 0 0 8px 0;
-  font-size: 14px;
-}
-
-/* =========================
-   FLAGS + TEAMS
-========================= */
-.team {
+.match-meta {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 10px;
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 0;
+}
+
+.match-meta .match-num {
+  background: var(--card-hover);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--text-sub);
+}
+
+.match-meta .match-date {
+  color: var(--teal);
+}
+
+/* Score row */
+.match-score-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.match-team {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
+  font-weight: 500;
   color: var(--text);
 }
 
-.team img {
-  width: 18px;
-  height: 12px;
+.match-team img {
+  width: 22px;
+  height: 15px;
   border-radius: 2px;
+  object-fit: cover;
+}
+
+.match-team.away {
+  justify-content: flex-end;
+  text-align: right;
+  flex-direction: row-reverse;
+}
+
+.match-vs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.match-vs span {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
 }
 
 /* =========================
-   INPUT SCORE BOXES
+   SCORE INPUTS
 ========================= */
 input[type="number"] {
-  width: 42px;
-  padding: 6px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: #0f1a30;
+  width: 48px;
+  height: 40px;
+  padding: 0 8px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border-mid);
+  background: var(--bg);
   color: var(--text);
   text-align: center;
-  font-weight: bold;
+  font-family: var(--font-body);
+  font-size: 18px;
+  font-weight: 600;
+  transition: border-color var(--ease);
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 
 input[type="number"]:focus {
-  outline: 1px solid var(--primary);
+  outline: none;
+  border-color: var(--teal);
+  background: var(--card-active);
 }
 
 /* =========================
-   KNOCKOUT BRACKET (FIX LAYOUT)
+   CLASSIFICATION TABLE (inside modal)
+========================= */
+.classification-section {
+  border-top: 1px solid var(--border);
+  padding-top: 22px;
+  margin-top: 4px;
+}
+
+.classification-section h3 {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin-bottom: 12px;
+}
+
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.standings-table tr {
+  border-bottom: 1px solid var(--border);
+  transition: background var(--ease);
+}
+
+.standings-table tr:last-child {
+  border-bottom: none;
+}
+
+.standings-table tr:hover {
+  background: var(--card);
+}
+
+.standings-table td {
+  padding: 10px 8px;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.standings-table td:first-child {
+  width: 28px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.standings-table td.pts {
+  text-align: right;
+  font-weight: 600;
+  color: var(--teal);
+}
+
+.standings-table td.gd {
+  text-align: right;
+  color: var(--text-sub);
+}
+
+/* Rank badge for top 2 */
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.rank-badge.q1 { background: var(--teal-dim); color: var(--teal); }
+.rank-badge.q2 { background: var(--blue-dim); color: var(--blue); }
+
+/* Info hint */
+.standings-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Modal footer buttons */
+.modal-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.modal-footer button {
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: var(--r-md);
+}
+
+.modal-footer button.primary {
+  background: var(--teal);
+  color: #04201c;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.modal-footer button.primary:hover {
+  background: #22cdb4;
+}
+
+/* =========================
+   KNOCKOUTS BRACKET
 ========================= */
 .knockouts {
   display: flex;
-  gap: 40px;
+  gap: 24px;
   margin-top: 20px;
   overflow-x: auto;
-  padding-bottom: 10px;
+  padding-bottom: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-hover) transparent;
+}
+
+.knockouts::-webkit-scrollbar {
+  height: 5px;
+}
+.knockouts::-webkit-scrollbar-thumb {
+  background: var(--card-hover);
+  border-radius: 10px;
 }
 
 .round {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-width: 160px;
+  gap: 10px;
+  min-width: 155px;
+  flex-shrink: 0;
 }
 
 .round-title {
   text-align: center;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 0 8px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 4px;
 }
 
-/* match box */
+/* Knockout match card */
 .match {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 8px;
+  border-radius: var(--r-md);
+  padding: 10px;
+  transition: all var(--ease);
   position: relative;
 }
 
 .match:hover {
   background: var(--card-hover);
+  border-color: var(--border-mid);
 }
 
-/* winner button */
+.match .team {
+  font-size: 13px;
+  padding: 4px 0;
+  gap: 6px;
+}
+
+.match .team img {
+  width: 18px;
+  height: 12px;
+}
+
 .match button {
-  margin-top: 6px;
+  margin-top: 8px;
   width: 100%;
+  font-size: 12px;
+  padding: 6px 8px;
+  background: var(--card-active);
+  color: var(--text-sub);
+  border-radius: var(--r-sm);
+  border: 1px solid var(--border);
+}
+
+.match button:hover {
+  background: var(--teal-dim);
+  border-color: var(--border-hi);
+  color: var(--teal);
+}
+
+/* Winner highlight */
+.match.has-winner .team.winner {
+  color: var(--teal);
+  font-weight: 600;
 }
 
 /* =========================
-   NOTES / TEXT
+   LEADERBOARD
 ========================= */
-.scoring-help-note {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.5;
-  margin-top: 15px;
-}
-
-/* =========================
-   INFO BOX
-========================= */
-.scoring-help-example {
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
   margin-top: 16px;
+}
+
+.leaderboard-table th {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.leaderboard-table td {
   padding: 12px;
-  background: rgba(45,212,191,0.08);
-  border: 1px solid rgba(45,212,191,0.2);
-  border-radius: 10px;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.leaderboard-table tr:last-child td {
+  border-bottom: none;
+}
+
+.leaderboard-table tr:hover td {
+  background: var(--card);
+}
+
+.leaderboard-rank {
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 36px;
+}
+
+.leaderboard-rank.top { color: var(--gold); }
+
+.leaderboard-score {
+  font-weight: 600;
+  color: var(--teal);
+  text-align: right;
+}
+
+/* =========================
+   SCORING HELP MODAL
+========================= */
+.scoring-help h3 {
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.scoring-help-note {
+  color: var(--text-sub);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 12px;
+}
+
+.scoring-help-example {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: var(--teal-dim);
+  border: 1px solid rgba(43,228,200,0.2);
+  border-radius: var(--r-md);
   display: flex;
-  gap: 12px;
+  gap: 14px;
+  align-items: flex-start;
 }
 
 .scoring-example-badge {
-  background: var(--primary);
-  color: #06201b;
-  font-weight: bold;
-  width: 36px;
-  height: 36px;
+  background: var(--teal);
+  color: #04201c;
+  font-weight: 700;
+  font-size: 16px;
+  min-width: 38px;
+  height: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
+  border-radius: var(--r-sm);
+  flex-shrink: 0;
 }
 
-/* =========================
-   FOOTER
-========================= */
 .scoring-help-footer {
-  margin-top: 18px;
+  margin-top: 20px;
   font-size: 12px;
-  color: var(--muted);
+  color: var(--text-muted);
   text-align: center;
 }
 
 /* =========================
-   SCROLLBAR (nice touch)
+   RESPONSIVE
 ========================= */
-#predictionViewer::-webkit-scrollbar {
-  width: 8px;
+@media (max-width: 768px) {
+  .page-wrapper, main, #app, .container {
+    padding: 16px 14px 48px;
+  }
+
+  .group-container {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 8px;
+  }
+
+  #predictionViewer {
+    padding: 20px 16px 18px;
+    border-radius: var(--r-lg);
+  }
+
+  .knockouts {
+    gap: 14px;
+  }
+
+  .round {
+    min-width: 130px;
+  }
+
+  .match-score-row {
+    gap: 8px;
+  }
+
+  input[type="number"] {
+    width: 42px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+  }
+
+  .modal-footer button {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
-#predictionViewer::-webkit-scrollbar-thumb {
-  background: var(--card-hover);
-  border-radius: 10px;
+@media (max-width: 480px) {
+  .group-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .match-team span {
+    display: none;
+  }
+
+  .nav-tabs, .top-buttons {
+    gap: 6px;
+  }
+}
+
+/* =========================
+   UTILITY CLASSES
+========================= */
+.teal  { color: var(--teal); }
+.blue  { color: var(--blue); }
+.gold  { color: var(--gold); }
+.muted { color: var(--text-sub); }
+.danger { color: var(--danger); }
+.success { color: var(--success); }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.pill.teal-pill {
+  background: var(--teal-dim);
+  color: var(--teal);
+  border: 1px solid rgba(43,228,200,0.2);
+}
+
+.pill.gold-pill {
+  background: var(--gold-dim);
+  color: var(--gold);
+  border: 1px solid rgba(245,200,66,0.2);
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
 }
