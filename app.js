@@ -851,13 +851,13 @@ function openGroupResultsModal(group) {
       <h3>GRUPO ${group}</h3>
       <div class="group-modal-team-grid"></div>
       <div class="group-modal-divider"></div>
-      <h4 class="group-modal-section-title"><span>📅</span> PARTIDOS DEL GRUPO</h4>
+      <h4 class="group-modal-section-title"><span>📅</span> Group Matches</h4>
       <div class="group-match-list"></div>
       <div class="group-live-standings-wrap">
-        <h4 class="group-modal-section-title"><span>🏆</span> CLASIFICACIÓN</h4>
+        <h4 class="group-modal-section-title"><span>🏆</span> Classification</h4>
         <div class="group-modal-standings"></div>
       </div>
-      <div class="group-modal-info">ⓘ Introduce los resultados de los partidos para ver la clasificación.</div>
+      <div class="group-modal-info">ⓘ Enter the match results to see the standings.</div>
       <div class="group-modal-actions">
         <button type="button" class="toolbar-btn" id="cancelGroupResults">Cerrar</button>
         <button type="button" class="submit-btn" id="saveGroupResults">Guardar</button>
@@ -956,7 +956,6 @@ function openGroupResultsModal(group) {
   });
 }
 
-
 // ---- Compute match teams from group picks ----
 function getSlotTeam(ref) {
   if (!ref) return null;
@@ -1027,8 +1026,6 @@ function computeMatchTeams() {
   }
 }
 
-
-
 // ---- Toast / Loading / Confetti ----
 function showToast(msg, error) {
   const c = document.getElementById('toastContainer');
@@ -1078,7 +1075,7 @@ function renderGroups() {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'group-card group-card-clickable' + (complete ? ' group-complete' : ' group-empty');
-    card.title = complete ? 'Editar resultados del grupo ' + g : 'Meter resultados del grupo ' + g;
+    card.title = complete ? 'Edit group results ' + g : 'Enter group results ' + g;
 
     const h3 = document.createElement('h3');
     h3.textContent = 'Group ' + g;
@@ -1142,7 +1139,7 @@ function renderGroups() {
 
     const hint = document.createElement('div');
     hint.className = 'group-card-hint';
-    hint.textContent = complete ? 'Editar resultados' : 'Meter resultados';
+    hint.textContent = complete ? 'Edit results' : 'Get results';
     card.appendChild(hint);
 
     card.addEventListener('click', () => openGroupResultsModal(g));
@@ -1160,7 +1157,7 @@ function renderThirdPlace() {
 
   const picked = state.thirdPlace.filter(Boolean);
   if (picked.length === 0) {
-    container.innerHTML = '<p class="note-text">Se calcularán solos cuando metas todos los resultados de grupos.</p>';
+    container.innerHTML = '<p class="note-text">They will be calculated automatically when you enter all the group results.</p>';
     return;
   }
 
@@ -1304,8 +1301,8 @@ function renderBracket() {
     finalTop = ((centerOf(sfTops[0]) + centerOf(sfTops[1])) / 2) - SLOT_H;
   }
 
-  // El partido por el 3er puesto vive entre las dos semifinales, en la
-  // misma columna de semis. La final se queda a la derecha como siempre.
+// The third-place match is played between the two semifinals, in the
+// same column as the semifinals. The final remains on the right, as always.
   const thirdTop = finalTop;
 
   const maxH = LABEL_H + r32.length * STEP + 40;
@@ -1553,9 +1550,9 @@ function sameMatchTeams(a, b) {
 }
 
 function cleanupKnockoutAfterGroupChange(previousMatchTeams) {
-  // Si cambiar un resultado de grupos mueve equipos en dieciseisavos, hay que borrar
-  // cualquier pick que dependía de la foto anterior. Repetimos hasta estabilizar para
-  // que caigan también octavos/cuartos/semis/final cuando su camino ya no existe.
+  // If changing a group result moves teams in the round of 32, we must delete
+// any picks that depended on the previous picture. We repeat until we stabilize so that
+// the round of 16/quarter-finals/semi-finals/finals also fall when their path no longer exists.
   let changed = true;
   let guard = 0;
 
@@ -1673,7 +1670,7 @@ function openAwardPickerModal(select) {
   const overlay = ensureAwardPickerModal();
   const list = overlay.querySelector('#awardPickerList');
   const title = overlay.querySelector('#awardPickerTitle');
-  const label = select.closest('.award-row')?.querySelector('label')?.textContent?.trim() || 'Elegir jugador';
+  const label = select.closest('.award-row')?.querySelector('label')?.textContent?.trim() || 'Choose player';
   const currentValue = select.value || '';
 
   overlay.dataset.selectId = select.id;
@@ -1684,7 +1681,7 @@ function openAwardPickerModal(select) {
   empty.type = 'button';
   empty.className = 'award-picker-option' + (!currentValue ? ' selected' : '');
   empty.dataset.value = '';
-  empty.innerHTML = '<span class="award-placeholder">---</span><span class="award-player-country">Sin elegir</span>';
+     empty.innerHTML = '<span class="award-placeholder">---</span><span class="award-player-country">Without choosing</span>';
   list.appendChild(empty);
 
   AWARD_PLAYERS.forEach(player => {
@@ -2230,57 +2227,56 @@ function openScoringHelpModal() {
   modal.style.display = 'flex';
   viewer.innerHTML = `
     <div class="scoring-help">
-      <h3>❓ Cómo se puntúa</h3>
+      <h3>❓ How scoring works</h3>
 
       <div class="scoring-help-grid">
         <div class="scoring-help-card">
-          <h4>🌍 Fase de grupos</h4>
+          <h4>🌍 Group stage</h4>
           <ul>
-            <li>Resultado exacto de partido: <strong>${puntuaciones.grupos.partido.resultadoExacto} pts</strong></li>
-            <li>Ganador/empate correcto: <strong>${puntuaciones.grupos.partido.ganadorEmpateCorrecto} pt</strong></li>
-            <li>1º exacto de grupo: <strong>${puntuaciones.grupos.posicion.primero} pts</strong></li>
-            <li>2º exacto de grupo: <strong>${puntuaciones.grupos.posicion.segundo} pts</strong></li>
-            <li>3º exacto de grupo: <strong>${puntuaciones.grupos.posicion.tercero} pt</strong></li>
+            <li>Exact match result: <strong>${puntuaciones.grupos.partido.resultadoExacto} pts</strong></li>
+            <li>Correct winner/draw: <strong>${puntuaciones.grupos.partido.ganadorEmpateCorrecto} pt</strong></li>
+            <li>1st place in group exactly: <strong>${puntuaciones.grupos.posicion.primero} pts</strong></li>
+            <li>2nd place in group exactly: <strong>${puntuaciones.grupos.posicion.segundo} pts</strong></li>
+            <li>3rd place in group exactly: <strong>${puntuaciones.grupos.posicion.tercero} pt</strong></li>
           </ul>
         </div>
 
         <div class="scoring-help-card">
-          <h4>🥊 Eliminatorias</h4>
+          <h4>🥊 Knockout stage</h4>
           <ul>
-            <li>Equipo en dieciseisavos: <strong>${puntuaciones.eliminatorias.round32} pts</strong></li>
-            <li>Equipo en octavos: <strong>${puntuaciones.eliminatorias.round16} pts</strong></li>
-            <li>Equipo en cuartos: <strong>${puntuaciones.eliminatorias.quarterfinals} pts</strong></li>
-            <li>Equipo en semifinales: <strong>${puntuaciones.eliminatorias.semifinals} pts</strong></li>
-            <li>Finalista: <strong>${puntuaciones.eliminatorias.finalist} pts</strong></li>
-            <li>Campeón: <strong>+${puntuaciones.eliminatorias.champion} pts</strong></li>
-            <li>Tercer puesto: <strong>${puntuaciones.eliminatorias.thirdPlace} pts</strong></li>
+            <li>Team in Round of 32: <strong>${puntuaciones.eliminatorias.round32} pts</strong></li>
+            <li>Team in Round of 16: <strong>${puntuaciones.eliminatorias.round16} pts</strong></li>
+            <li>Team in Quarter-finals: <strong>${puntuaciones.eliminatorias.quarterfinals} pts</strong></li>
+            <li>Team in Semi-finals: <strong>${puntuaciones.eliminatorias.semifinals} pts</strong></li>
+            <li>Finalist: <strong>${puntuaciones.eliminatorias.finalist} pts</strong></li>
+            <li>Champion: <strong>+${puntuaciones.eliminatorias.champion} pts</strong></li>
+            <li>Third place: <strong>${puntuaciones.eliminatorias.thirdPlace} pts</strong></li>
           </ul>
         </div>
 
         <div class="scoring-help-card">
-          <h4>⭐ Premios individuales</h4>
+          <h4>⭐ Individual awards</h4>
           <ul>
-            <li>Bota de Oro: <strong>${puntuaciones.premios.goldenBoot.join(' / ')} pts</strong></li>
-            <li>Balón de Oro: <strong>${puntuaciones.premios.goldenBall.join(' / ')} pts</strong></li>
+            <li>Golden Boot: <strong>${puntuaciones.premios.goldenBoot.join(' / ')} pts</strong></li>
+            <li>Golden Ball: <strong>${puntuaciones.premios.goldenBall.join(' / ')} pts</strong></li>
           </ul>
         </div>
       </div>
 
       <p class="scoring-help-note">
-        La puntuación total de eliminatorias sí suma todas las decisiones acertadas. En el bracket del ranking, cada cajita muestra solo los puntos de esa ronda concreta; en la final puede sumar finalista + campeón si has clavado ambas cosas.
+        Knockout scoring adds up all correct predictions. In the ranking bracket, each box only shows the points for that specific round; in the final, you can score both finalist + champion if both predictions are correct.
       </p>
-
 
       <div class="scoring-help-example">
         <div class="scoring-example-badge got-points">+3</div>
         <div class="scoring-example-text">
-          Cada cuadradito verde del leaderboard representa los puntos que te ha dado esa decisión concreta:
-          acertar un resultado exacto, que una selección llegue a 16avos, semis, final, etc.
+          Each green square in the leaderboard represents the points earned from that specific prediction:
+          predicting an exact result, a team reaching the Round of 16, semi-finals, final, etc.
         </div>
       </div>
 
       <div class="scoring-help-footer">
-        Los resultados y las puntuaciones NO son reales, se resetearán a 0 cuando comience el mundial. Es solo un ejemplo aleatorio.
+        The scores and points are NOT real, they will reset to 0 when the World Cup begins. This is just a random example.
       </div>
     </div>
   `;
@@ -2291,15 +2287,15 @@ function renderPredictionReview(entry) {
 
   viewer.innerHTML = `
     <div class="prediction-review">
-      <h3>La predicción de ${entry.name} — ${entry.score} pts</h3>
+      <h3>The prediction of ${entry.name} — ${entry.score} points</h3>
 
-      <h4>Fase de grupos</h4>
+      <h4>Group Phase</h4>
       <div class="review-groups" id="reviewGroups"></div>
 
       <h4>Knockout</h4>
       <div class="review-section" id="reviewKnockout"></div>
 
-      <h4>Logros individuales</h4>
+      <h4>Individual achievements</h4>
       <div class="review-section" id="reviewAwards"></div>
     </div>
   `;
@@ -2445,7 +2441,7 @@ function renderReviewGroups(prediction, entry) {
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'group-card group-card-clickable review-group-card' + (complete ? ' group-complete' : ' group-empty');
-    card.title = 'Ver partidos del grupo ' + g;
+    card.title = 'See group matches ' + g;
 
     const header = document.createElement('div');
     header.className = 'review-group-card-header';
@@ -2457,7 +2453,7 @@ function renderReviewGroups(prediction, entry) {
     const groupTotalPoints = complete ? calculateGroupReviewTotalPoints(g, prediction) : 0;
     const totalBadge = document.createElement('span');
     totalBadge.className = 'review-group-total-points' + (groupTotalPoints > 0 ? ' got-points' : ' no-points');
-    totalBadge.title = 'Total de puntos conseguidos en el grupo ' + g;
+    totalBadge.title = 'Total points achieved in the group' + g;
     totalBadge.textContent = `+${groupTotalPoints}pt`; + (groupTotalPoints === 1 ? '' : 's');
     header.appendChild(totalBadge);
 
@@ -2516,7 +2512,7 @@ function renderReviewGroups(prediction, entry) {
 
     const hint = document.createElement('div');
     hint.className = 'group-card-hint';
-    hint.textContent = 'Ver partidos';
+    hint.textContent = 'See matches';
     card.appendChild(hint);
 
     card.addEventListener('click', () => openReadOnlyGroupResultsModal(entry, g));
@@ -2540,13 +2536,13 @@ function openReadOnlyGroupResultsModal(entry, group) {
       <h3>GRUPO ${group}</h3>
       <div class="group-modal-team-grid"></div>
       <div class="group-modal-divider"></div>
-      <h4 class="group-modal-section-title"><span>📅</span> PARTIDOS APOSTADOS</h4>
+      <h4 class="group-modal-section-title"><span>📅</span> BET ON MATCHES</h4>
       <div class="group-match-list"></div>
       <div class="group-live-standings-wrap">
-        <h4 class="group-modal-section-title"><span>🏆</span> CLASIFICACIÓN: APOSTADA VS REAL</h4>
+        <h4 class="group-modal-section-title"><span>🏆</span> CLASSIFICATION: BET VS REAL</h4>
         <div class="review-standings-compare review-standings-compare-with-points">
           <div class="review-standings-col">
-            <div class="review-standings-label">Apostada</div>
+            <div class="review-standings-label">Bet</div>
             <div class="group-modal-standings" id="predictedGroupStandings"></div>
           </div>
           <div class="review-standings-points-col">
@@ -2559,7 +2555,7 @@ function openReadOnlyGroupResultsModal(entry, group) {
           </div>
         </div>
       </div>
-      <div class="group-modal-info">Solo lectura: esto es lo que apostó en fase de grupos.</div>
+      <div class="group-modal-info">Read only: this is what he bet on in the group stage.</div>
     </div>
   `;
 
@@ -2647,7 +2643,7 @@ function openReadOnlyGroupResultsModal(entry, group) {
 
   positionPointsDiv.innerHTML = standings.map((row, idx) => {
     const points = getPredictedGroupPositionPoints(row.team, idx, autoThirds, realOrder, realThirds);
-    return `<div class="review-standing-points-row">${renderReviewPointsBadge(points, 'Puntos por esta posición')}</div>`;
+       return `<div class="review-standing-points-row">${renderReviewPointsBadge(points, 'Points for this position')}</div>`;
   }).join('');
 
   realStandingsDiv.innerHTML = realOrder.map((team, idx) => {
